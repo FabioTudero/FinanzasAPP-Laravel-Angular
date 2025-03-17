@@ -28,6 +28,24 @@ class AuthController extends Controller
         return response($response, 201);
     }
 
+    public function register(Request $request)
+    {
+        if (User::where('name', $request->name)->first()) {
+            return response([
+                'message' => ['El nombre de usuario ya está en uso.']
+            ], 404);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'password' => Hash::make($request->password)
+        ]);
+        
+        $user->save();
+
+        return response($user, 201);
+    }
+
     public function logout(Request $request)
     {
         $user = $request->user();

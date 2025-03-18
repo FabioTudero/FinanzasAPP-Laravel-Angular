@@ -28,14 +28,18 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post(`${this.apiUrl}/login`, { username, password })
-      .subscribe((data: any) => {
-        if (data['token']) {
-          console.log('Token:', data['token']);
-          localStorage.setItem(this.TOKEN_KEY, data['token']); // Almacena el token correctamente
-          this.router.navigate(['/dashboard']);
-        }
-      });
+    try {
+      return this.http.post(`${this.apiUrl}/login`, { username, password }).pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            return throwError(() => new Error('Usuario o contraseña incorrectos.'));
+          }
+          return throwError(() => new Error('Error desconocido al iniciar sesión.'));
+        })
+      );
+    } catch (error) {
+      return throwError(() => new Error('Error inesperado.'));
+    }
   }
 
   register(username: string, password: string) {

@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 export class LoginComponent {
 
   loginForm: FormGroup;
+  errorMessage: string | undefined;
 
   constructor(
     fb: FormBuilder,
@@ -25,7 +26,14 @@ export class LoginComponent {
   }
 
   async onSubmit(value: any) {
-    await this.authService.login(value.name, value.password);
+    await this.authService.login(value.name, value.password).subscribe({
+      next: (userData) => {
+        console.log('User logged in:', userData);
+      },
+      error: (err) => {
+        this.errorMessage = err.message;
+      }
+    });
   }
 
 }

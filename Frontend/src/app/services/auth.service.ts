@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 export interface User {
   id: number;
@@ -39,8 +39,16 @@ export class AuthService {
   }
 
   register(username: string, password: string) {
-    return this.http.post(`${this.apiUrl}/register`, { username, password });
+    return this.http.post(`${this.apiUrl}/register`, { username, password }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return throwError(() => new Error('El nombre de usuario ya está en uso.'));
+        }
+        return throwError(() => new Error('Error desconocido al registrar.'));
+      })
+    );
   }
+  
 
   logout() {
     localStorage.removeItem(this.TOKEN_KEY); // Elimina el token correctamente

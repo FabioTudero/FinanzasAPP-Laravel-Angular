@@ -13,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterComponent {
 
   registerForm: FormGroup;
+  errorMessage: string | undefined;
 
   constructor(
     fb: FormBuilder,
@@ -25,12 +26,14 @@ export class RegisterComponent {
   }
 
   async onSubmit(value: any) {
-    await this.authService.register(value.name, value.password
-    ).subscribe(
-      (data) => {
-        console.log(data);
+    await this.authService.register(value.name, value.password).subscribe({
+      next: (userData) => {
+        console.log('User registered:', userData);
+      },
+      error: (err) => {
+        this.errorMessage = err.message;
       }
-    );
+    });
   }
 
 }

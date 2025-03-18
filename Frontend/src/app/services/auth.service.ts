@@ -6,20 +6,16 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  
   private apiUrl = 'http://localhost:8000/api';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string) {
     return this.http.post(`${this.apiUrl}/login`, { username, password })
       .subscribe((data: any) => {
         if (data['token']) {
           localStorage.setItem('token', data['token']);
-          this.router.navigate(['/']);
+          this.router.navigate(['/dashboard']);
         }
       });
   }
@@ -31,5 +27,9 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
   }
 }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 export interface User {
   id: number;
@@ -27,20 +27,23 @@ export class AuthService {
     return this.http.get<User>(`${this.apiUrl}/user`, { headers });
   }
 
-  login(username: string, password: string) {
-    try {
-      return this.http.post(`${this.apiUrl}/login`, { username, password }).pipe(
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 404) {
-            return throwError(() => new Error('Usuario o contraseña incorrectos.'));
-          }
-          return throwError(() => new Error('Error desconocido al iniciar sesión.'));
-        })
-      );
-    } catch (error) {
-      return throwError(() => new Error('Error inesperado.'));
-    }
+  login(username: string, password: string): Observable<any> {
+    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { username, password }).pipe(
+      tap(response => {
+        if (response && response.token) {
+          localStorage.setItem(this.TOKEN_KEY, response.token);
+          this.router.navigate(['/dashboard']); 
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return throwError(() => new Error('Usuario o contraseña incorrectos.'));
+        }
+        return throwError(() => new Error('Error desconocido al iniciar sesión.'));
+      })
+    );
   }
+  
 
   register(username: string, password: string) {
     return this.http.post(`${this.apiUrl}/register`, { username, password }).pipe(

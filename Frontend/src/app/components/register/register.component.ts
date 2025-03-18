@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -17,7 +17,8 @@ export class RegisterComponent {
 
   constructor(
     fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.registerForm = fb.group({
       'name': [''],
@@ -26,9 +27,9 @@ export class RegisterComponent {
   }
 
   async onSubmit(value: any) {
-    await this.authService.register(value.name, value.password).subscribe({
+    this.authService.register(value.name, value.password).subscribe({
       next: (userData) => {
-        console.log('User registered:', userData);
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         this.errorMessage = err.message;

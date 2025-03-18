@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $user = User::where('name', $request->name)->first();
+        $user = User::where('name', $request->username)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
@@ -30,14 +30,14 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        if (User::where('name', $request->name)->first()) {
+        if (User::where('name', $request->username)->first()) {
             return response([
                 'message' => ['El nombre de usuario ya está en uso.']
             ], 404);
         }
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->username,
             'password' => Hash::make($request->password)
         ]);
         

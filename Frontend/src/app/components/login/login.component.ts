@@ -25,12 +25,7 @@ export class LoginComponent {
   }
 
   async onSubmit(value: any) {
-    await this.authService.login(value.name, value.password
-    ).subscribe(
-      (data) => {
-        console.log(data);
-      }
-    );
+    await this.authService.login(value.name, value.password);
   }
 
 }

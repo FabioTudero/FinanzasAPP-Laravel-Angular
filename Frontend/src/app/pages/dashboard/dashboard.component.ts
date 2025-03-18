@@ -10,8 +10,13 @@ import { AuthService, User } from '../../services/auth.service';
 })
 export class DashboardComponent {
   user?: User;
+  currentMonth: string;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    this.currentMonth = months[new Date().getMonth()];
+  }
 
   ngOnInit() {
     this.authService.getUser().subscribe({

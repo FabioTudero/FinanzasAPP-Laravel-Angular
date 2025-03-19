@@ -18,8 +18,7 @@ return new class extends Migration
             $table->enum('type', ['income', 'expense']);
             $table->string('description');
             $table->decimal('amount', 10, 2);
-            $table->integer('month');
-            $table->integer('year');
+            $table->date('date');
             $table->timestamps();
         });
     }

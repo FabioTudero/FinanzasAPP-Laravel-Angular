@@ -10,7 +10,8 @@ export const routes: Routes = [
         component: HomeComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: 'dashboard', loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent) }
+            { path: 'dashboard', loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent) },
+            { path: 'add-transaction', loadComponent: () => import('./pages/add-transaction/add-transaction.component').then(m => m.AddTransactionComponent) },
         ]
     },
     {

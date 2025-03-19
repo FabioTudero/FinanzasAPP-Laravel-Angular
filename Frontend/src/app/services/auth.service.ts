@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface User {
   id: number;
@@ -12,7 +13,6 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api';
   private readonly TOKEN_KEY = 'auth_token'; // Usamos esta clave en todo el código
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -24,11 +24,11 @@ export class AuthService {
     }
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<User>(`${this.apiUrl}/user`, { headers });
+    return this.http.get<User>(`${environment.apiUrl}/user`, { headers });
   }
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { username, password }).pipe(
+    return this.http.post<{ token: string }>(`${environment.apiUrl}/login`, { username, password }).pipe(
       tap(response => {
         if (response && response.token) {
           localStorage.setItem(this.TOKEN_KEY, response.token);
@@ -46,7 +46,7 @@ export class AuthService {
   
 
   register(username: string, password: string) {
-    return this.http.post(`${this.apiUrl}/register`, { username, password }).pipe(
+    return this.http.post(`${environment.apiUrl}/register`, { username, password }).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 404) {
           return throwError(() => new Error('El nombre de usuario ya está en uso.'));

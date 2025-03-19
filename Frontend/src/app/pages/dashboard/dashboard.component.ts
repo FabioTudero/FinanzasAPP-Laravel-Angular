@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
 import { AuthService, User } from '../../services/auth.service';
+import { TransactionModalComponent } from "../../components/transaction-modal/transaction-modal.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [TransactionModalComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
   user?: User;
   currentMonth: string;
+
 
   constructor(private authService: AuthService) {
     const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 

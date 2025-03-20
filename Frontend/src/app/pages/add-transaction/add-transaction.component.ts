@@ -21,8 +21,8 @@ export class AddTransactionComponent {
     private transactionService: TransactionService
   ) {
     this.addTransactionForm = this.fb.group({
-      amount: [''],
       category_transaction_id: [''],
+      amount: [''],
       type: [''],
       description: [''],
       date: ['']

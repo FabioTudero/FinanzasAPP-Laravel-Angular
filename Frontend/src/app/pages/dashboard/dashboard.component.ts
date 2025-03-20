@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService, User } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { TransactionService } from '../../services/transaction.service';
+import { Balance } from '../../interfaces/balance';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,9 +11,12 @@ import { TransactionService } from '../../services/transaction.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
+
+
 export class DashboardComponent {
   user?: User;
   currentMonth: string;
+  balance: Balance | undefined;
 
   constructor(private authService: AuthService, private transactionService: TransactionService) {
     const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
@@ -33,6 +37,7 @@ export class DashboardComponent {
     this.transactionService.getBalance().subscribe({
       next: (balance) => {
         console.log('Balance:', balance);
+        this.balance = balance;
       },
       error: (err) => {
         console.error('Error fetching balance:', err);

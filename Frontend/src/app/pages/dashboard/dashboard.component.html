@@ -17,7 +17,7 @@
           <div class="space-y-1">
             <p class="text-emerald-600 text-sm font-medium">Ingresos</p>
             <h2 class="text-2xl font-bold text-emerald-700">
-              <!-- {{formatCurrency(monthlyData?.totalIncome || 0)}} -->
+               {{ balance?.income }}
             </h2>
           </div>
           <div class="bg-emerald-100 p-3 rounded-lg">
@@ -34,7 +34,7 @@
           <div class="space-y-1">
             <p class="text-red-600 text-sm font-medium">Gastos</p>
             <h2 class="text-2xl font-bold text-red-700">
-              <!-- {{formatCurrency(monthlyData?.totalExpense || 0)}} -->
+              {{ balance?.expense }}
             </h2>
           </div>
           <div class="bg-red-100 p-3 rounded-lg">
@@ -51,7 +51,7 @@
           <div class="space-y-1">
             <p class="text-sky-600 text-sm font-medium">Balance</p>
             <h2 class="text-2xl font-bold text-sky-700">
-              <!-- {{formatCurrency(monthlyData?.balance || 0)}} -->
+              {{ balance?.balance }}
             </h2>
           </div>
           <div class="bg-sky-100 p-3 rounded-lg">

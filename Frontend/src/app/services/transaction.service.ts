@@ -5,6 +5,7 @@ import { Category } from '../interfaces/category';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { Balance } from '../interfaces/balance';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class TransactionService {
     );
   }
 
-  getBalance(): Observable<any> {
+  getBalance(): Observable<Balance> {
     const token = localStorage.getItem('auth_token');
     if (!token) {
       throw new Error('No se encontró el token de autenticación');
@@ -37,6 +38,6 @@ export class TransactionService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get(`${this.apiUrl}/get-balance`, { headers });
+    return this.http.get<Balance>(`${this.apiUrl}/get-balance`, { headers });
   }
 }

@@ -9,9 +9,11 @@ class TransactionController extends Controller
 {
     public function get_categories(Request $request)
     {
-        $categories = CategoryTransaction::all();
-        return response()->json([
-            'categories' => $categories
-        ]);
+        try {
+            $categories = CategoryTransaction::all();
+            return response()->json($categories);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al obtener las categorías'], 500);
+        }
     }
 }

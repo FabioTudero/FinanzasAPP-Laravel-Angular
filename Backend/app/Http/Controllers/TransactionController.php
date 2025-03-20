@@ -32,7 +32,6 @@ class TransactionController extends Controller
             $transaction->save();
             return response()->json($transaction);
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
             return response()->json(['error' => 'Error al agregar la transacción'], 500);
         }
     }
@@ -61,7 +60,6 @@ class TransactionController extends Controller
 
             return response()->json(['balance' => $balance, 'income' => $income, 'expense' => $expense]);
         } catch (\Exception $e) {
-            Log::error('Error al obtener el balance: ' . $e->getMessage());
             return response()->json(['error' => 'Error al obtener el balance'], 500);
         }
     }

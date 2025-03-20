@@ -56,7 +56,10 @@ class TransactionController extends Controller
                 }
             }
 
-            return response()->json(['balance' => $balance]);
+            $income = Transaction::where('user_id', $user->id)->where('type', 'income')->sum('amount');
+            $expense = Transaction::where('user_id', $user->id)->where('type', 'expense')->sum('amount');
+
+            return response()->json(['balance' => $balance, 'income' => $income, 'expense' => $expense]);
         } catch (\Exception $e) {
             Log::error('Error al obtener el balance: ' . $e->getMessage());
             return response()->json(['error' => 'Error al obtener el balance'], 500);

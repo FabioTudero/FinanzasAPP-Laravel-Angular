@@ -1,13 +1,7 @@
-<ul>
-    @for (category of categories; track $index) {
-        <li>{{ category.name }}</li>
-    }
-  </ul>
-  
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 class="text-2xl font-bold mb-6 text-center">Registrar Transacción</h2>
-        <form>
+        <form [formGroup]="addTransactionForm" class="space-y-4" (ngSubmit)="onSubmit()">
             <!-- Campo para la categoría de la transacción -->
             <div class="mb-4">
                 <label for="category_transaction_id" class="block text-gray-700">Categoría de Transacción</label>

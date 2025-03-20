@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Category } from '../../interfaces/category';
 import { TransactionService } from '../../services/transaction.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-transaction',
@@ -15,10 +17,12 @@ export class AddTransactionComponent {
 
   addTransactionForm: FormGroup;
   categories: Category[] | undefined;
+  userId: number | undefined;
 
   constructor(
     private fb: FormBuilder,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private authService: AuthService
   ) {
     this.addTransactionForm = this.fb.group({
       category_transaction_id: [''],
@@ -42,7 +46,31 @@ export class AddTransactionComponent {
   }
 
   onSubmit() {
-    console.log('Form:', this.addTransactionForm.value);
+    this.authService.getUser().subscribe({
+      next: (user) => {
+        this.userId = user.id;
+        console.log('User:', this.userId);
+  
+        // Asegurar que user_id se asigna después de obtener el usuario
+        const transactionData = {
+          ...this.addTransactionForm.value,
+          user_id: this.userId
+        };
+
+        // Ahora sí, enviar la transacción con el user_id correcto
+        this.transactionService.addTransaction(transactionData).subscribe({
+          next: (response) => {
+          },
+          error: (err) => {
+            console.error('Error adding transaction:', err);
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching user:', err);
+      }
+    });
   }
+  
 
 }

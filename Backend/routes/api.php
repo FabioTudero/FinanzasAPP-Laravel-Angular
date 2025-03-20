@@ -17,4 +17,5 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 /* TRANSACTION */
 Route::get('/get-categories', [TransactionController::class, 'get_categories']);
+Route::post('/add-transaction', [TransactionController::class, 'add_transaction']);
 /* TRANSACTION */

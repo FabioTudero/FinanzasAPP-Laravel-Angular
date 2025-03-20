@@ -2,18 +2,19 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Category } from '../../interfaces/category';
 import { TransactionService } from '../../services/transaction.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-transaction',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.css'
 })
 export class AddTransactionComponent {
 
   addTransactionForm: FormGroup;
-  categories: Category[] = [];
+  categories: Category[] | undefined;
 
   constructor(
     private fb: FormBuilder,

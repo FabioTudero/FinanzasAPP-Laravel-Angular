@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from '../interfaces/category';
 import { environment } from '../../environments/environment';
@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 })
 export class TransactionService {
   private apiUrl = environment.apiUrl;
+  user_id: number | undefined;
 
   constructor(private http: HttpClient, private route: Router) { }
 
@@ -24,5 +25,18 @@ export class TransactionService {
         this.route.navigate(['/dashboard']);
       })
     );
+  }
+
+  getBalance(): Observable<any> {
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación');
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get(`${this.apiUrl}/get-balance`, { headers });
   }
 }

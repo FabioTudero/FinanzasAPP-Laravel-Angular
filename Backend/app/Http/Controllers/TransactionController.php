@@ -36,4 +36,30 @@ class TransactionController extends Controller
             return response()->json(['error' => 'Error al agregar la transacción'], 500);
         }
     }
+
+    public function get_balance(Request $request)
+    {
+        try {
+            // Obtener el usuario autenticado
+            $user = $request->user();
+
+            // Obtener las transacciones del usuario
+            $transactions = Transaction::where('user_id', $user->id)->get();
+
+            // Calcular el balance
+            $balance = 0;
+            foreach ($transactions as $transaction) {
+                if ($transaction->type == 'income') {
+                    $balance += $transaction->amount;
+                } else {
+                    $balance -= $transaction->amount;
+                }
+            }
+
+            return response()->json(['balance' => $balance]);
+        } catch (\Exception $e) {
+            Log::error('Error al obtener el balance: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener el balance'], 500);
+        }
+    }
 }

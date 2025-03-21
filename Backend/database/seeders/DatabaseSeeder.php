@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CategoryTransaction;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,9 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        CategoryTransaction::create(['name' => 'Salario'], ['name' => 'Alquiler'], ['name' => 'Comida'], ['name' => 'Transporte'], ['name' => 'Entretenimiento'], ['name' => 'Invesion'], ['name' => 'Otros']);
     }
 }

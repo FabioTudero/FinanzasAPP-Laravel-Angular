@@ -78,16 +78,16 @@
              class="p-4 hover:bg-gray-50 transition-colors">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
-              <div [class]="transaction.type === 'income' ? 
+              <div [class]="transaction.type === 'IMCOME' ? 
                            'bg-emerald-100 text-emerald-600' : 
                            'bg-red-100 text-red-600'" 
                    class="p-2 rounded-lg">
-                    <svg *ngIf="transaction.type === 'income'" 
+                    <svg *ngIf="transaction.type === 'IMCOME'" 
                     class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                    
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
-                <svg *ngIf="transaction.type === 'expense'" 
+                <svg *ngIf="transaction.type === 'EXPRENSE'" 
                      class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
                 </svg>
@@ -98,11 +98,11 @@
               </div>
             </div>
             <div class="text-right">
-              <p [class]="transaction.type === 'income' ? 
+              <p [class]="transaction.type === 'IMCOME' ? 
                          'text-emerald-600' : 
                          'text-red-600'" 
                  class="text-sm font-medium">
-                <!-- {{transaction.type === 'income' ? '+' : '-'}}{{formatCurrency(transaction.amount)}} -->
+                <!-- {{transaction.type === 'IMCOME' ? '+' : '-'}}{{formatCurrency(transaction.amount)}} -->
               </p>
               <!-- <p class="text-sm text-gray-500">{{formatDate(transaction.date)}}</p> -->
             </div>

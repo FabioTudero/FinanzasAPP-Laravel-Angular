@@ -39,7 +39,6 @@ export class AddTransactionComponent {
     this.transactionService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
-        console.log('Categories:', categories);
       },
       error: (err) => {
         console.error('Error fetching categories:', err);
@@ -51,7 +50,6 @@ export class AddTransactionComponent {
     this.authService.getUser().subscribe({
       next: (user) => {
         this.userId = user.id;
-        console.log('User:', this.userId);
   
         // Asegurar que user_id se asigna después de obtener el usuario
         const transactionData = {

@@ -40,4 +40,17 @@ export class TransactionService {
 
     return this.http.get<Balance>(`${this.apiUrl}/get-balance`, { headers });
   }
+
+  getTransactions(): Observable<any> {
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación');
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get(`${this.apiUrl}/get-transactions`, { headers });
+  }
 }

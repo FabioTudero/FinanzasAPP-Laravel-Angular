@@ -3,11 +3,20 @@ import { AuthService, User } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { TransactionService } from '../../services/transaction.service';
 import { Balance } from '../../interfaces/balance';
+import { CommonModule } from '@angular/common';
 
+interface Transaction {
+  id: number;
+  category_transaction_id: number;
+  amount: number;
+  type: 'income' | 'expense';
+  description: string;
+  date: string;
+}
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -17,6 +26,7 @@ export class DashboardComponent {
   user?: User;
   currentMonth: string;
   balance: Balance | undefined;
+  transactions: Transaction[] | undefined;
 
   constructor(private authService: AuthService, private transactionService: TransactionService) {
     const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
@@ -40,6 +50,18 @@ export class DashboardComponent {
       },
       error: (err) => {
         console.error('Error fetching balance:', err);
+      }
+    });
+
+    this.transactionService.getTransactions().subscribe({
+      next: (transactions) => {
+        console.log('Transactions:', transactions);
+        this.transactions = transactions;
+        console.log('Transactions:', this.transactions);
+        
+      },
+      error: (err) => {
+        console.error('Error fetching transactions:', err);
       }
     });
   }

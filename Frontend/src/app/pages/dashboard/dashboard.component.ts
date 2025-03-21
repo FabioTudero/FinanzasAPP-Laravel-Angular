@@ -4,15 +4,8 @@ import { RouterLink } from '@angular/router';
 import { TransactionService } from '../../services/transaction.service';
 import { Balance } from '../../interfaces/balance';
 import { CommonModule } from '@angular/common';
+import { Transaction } from '../../interfaces/transaction';
 
-interface Transaction {
-  id: number;
-  category_transaction_id: number;
-  amount: number;
-  type: 'income' | 'expense';
-  description: string;
-  date: string;
-}
 @Component({
   selector: 'app-dashboard',
   standalone: true,

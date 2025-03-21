@@ -17,7 +17,16 @@ export class TransactionService {
   constructor(private http: HttpClient, private route: Router) { }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.apiUrl}/get-categories`);
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación');
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<Category[]>(`${this.apiUrl}/get-categories`, { headers }); 
   }
 
   addTransaction(transaction: any): Observable<any> {

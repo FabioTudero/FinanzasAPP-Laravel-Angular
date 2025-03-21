@@ -29,7 +29,9 @@ export class AddTransactionComponent {
       amount: [''],
       type: [''],
       description: [''],
-      date: ['']
+      day: [''],
+      month: [''],
+      year: ['']
     });
   }  
 

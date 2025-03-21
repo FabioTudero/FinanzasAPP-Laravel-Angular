@@ -36,7 +36,6 @@ export class DashboardComponent {
     
     this.transactionService.getBalance().subscribe({
       next: (balance) => {
-        console.log('Balance:', balance);
         this.balance = balance;
       },
       error: (err) => {

@@ -63,4 +63,19 @@ class TransactionController extends Controller
             return response()->json(['error' => 'Error al obtener el balance'], 500);
         }
     }
+
+    public function get_transactions(Request $request)
+    {
+        try {
+            // Obtener el usuario autenticado
+            $user = $request->user();
+
+            // Obtener las transacciones del usuario
+            $transactions = Transaction::where('user_id', $user->id)->get();
+
+            return response()->json($transactions);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al obtener las transacciones'], 500);
+        }
+    }
 }

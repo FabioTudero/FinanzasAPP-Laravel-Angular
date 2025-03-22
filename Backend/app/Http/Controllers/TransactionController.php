@@ -52,17 +52,17 @@ class TransactionController extends Controller
             // Calcular el balance
             $balance = 0;
             foreach ($transactions as $transaction) {
-                if ($transaction->type == 'income') {
+                if ($transaction->type == 'IMCOME') {
                     $balance += $transaction->amount;
                 } else {
                     $balance -= $transaction->amount;
                 }
             }
 
-            $income = Transaction::where('user_id', $user->id)->where('type', 'income')->sum('amount');
-            $expense = Transaction::where('user_id', $user->id)->where('type', 'expense')->sum('amount');
+            $income = Transaction::where('user_id', $user->id)->where('type', 'IMCOME')->sum('amount');
+            $expense = Transaction::where('user_id', $user->id)->where('type', 'EXPENSE')->sum('amount');
 
-            return response()->json(['balance' => $balance, 'income' => $income, 'expense' => $expense]);
+            return response()->json(['balance' => $balance, 'IMCOME' => $income, 'EXPENSE' => $expense]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al obtener el balance'], 500);
         }

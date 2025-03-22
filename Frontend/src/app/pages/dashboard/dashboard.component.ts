@@ -40,6 +40,7 @@ export class DashboardComponent {
     this.transactionService.getBalance().subscribe({
       next: (balance) => {
         this.balance = balance;
+        console.log('Balance:', balance);
       },
       error: (err) => {
         console.error('Error fetching balance:', err);
@@ -48,10 +49,7 @@ export class DashboardComponent {
 
     this.transactionService.getTransactions().subscribe({
       next: (transactions) => {
-        console.log('Transactions:', transactions);
-        this.transactions = transactions;
-        console.log('Transactions:', this.transactions);
-        
+        this.transactions = transactions
       },
       error: (err) => {
         console.error('Error fetching transactions:', err);

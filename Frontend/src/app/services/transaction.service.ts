@@ -30,7 +30,11 @@ export class TransactionService {
   }
 
   addTransaction(transaction: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add-transaction`, transaction).pipe(
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación');
+    }
+    return this.http.post(`${this.apiUrl}/add-transaction`, { token, transaction }).pipe(
       tap(() => {
         this.route.navigate(['/dashboard']);
       })

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use \Log;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Models\CategoryTransaction;
 use App\Models\Transaction;
@@ -21,17 +21,21 @@ class TransactionController extends Controller
 
     public function add_transaction(Request $request)
     {
+        Log::info($request->all());
         try {
             $transaction = new Transaction();
-            $transaction->user_id = $request->user_id;
-            $transaction->category_transaction_id = $request->category_transaction_id;
-            $transaction->type = $request->type;
-            $transaction->description = $request->description;
-            $transaction->amount = $request->amount;
-            $transaction->date = $request->date;
+            $transaction->user_id = $request->input('transaction.user_id');
+            $transaction->category_transaction_id = $request->input('transaction.category_transaction_id');
+            $transaction->type = (string) $request->input('transaction.type');
+            $transaction->description = $request->input('transaction.description');
+            $transaction->amount = $request->input('transaction.amount');
+            $transaction->day = $request->input('transaction.day');
+            $transaction->month = $request->input('transaction.month');
+            $transaction->year = $request->input('transaction.year');
             $transaction->save();
             return response()->json($transaction);
         } catch (\Exception $e) {
+            Log::error($e);
             return response()->json(['error' => 'Error al agregar la transacción'], 500);
         }
     }

@@ -21,17 +21,17 @@ class TransactionController extends Controller
 
     public function add_transaction(Request $request)
     {
-        Log::info($request->all());
+        $user_id = $request->user()->id;
         try {
             $transaction = new Transaction();
-            $transaction->user_id = $request->input('transaction.user_id');
-            $transaction->category_transaction_id = $request->input('transaction.category_transaction_id');
-            $transaction->type = (string) $request->input('transaction.type');
-            $transaction->description = $request->input('transaction.description');
-            $transaction->amount = $request->input('transaction.amount');
-            $transaction->day = $request->input('transaction.day');
-            $transaction->month = $request->input('transaction.month');
-            $transaction->year = $request->input('transaction.year');
+            $transaction->user_id = $user_id;
+            $transaction->category_transaction_id = $request->input('category_transaction_id');
+            $transaction->type = $request->input('type');
+            $transaction->description = $request->input('description');
+            $transaction->amount = $request->input('amount');
+            $transaction->day = $request->input('day');
+            $transaction->month = $request->input('month');
+            $transaction->year = $request->input('year');
             $transaction->save();
             return response()->json($transaction);
         } catch (\Exception $e) {
@@ -52,17 +52,17 @@ class TransactionController extends Controller
             // Calcular el balance
             $balance = 0;
             foreach ($transactions as $transaction) {
-                if ($transaction->type == 'IMCOME') {
+                if ($transaction->type == 'INCOME') {
                     $balance += $transaction->amount;
                 } else {
                     $balance -= $transaction->amount;
                 }
             }
 
-            $income = Transaction::where('user_id', $user->id)->where('type', 'IMCOME')->sum('amount');
+            $income = Transaction::where('user_id', $user->id)->where('type', 'INCOME')->sum('amount');
             $expense = Transaction::where('user_id', $user->id)->where('type', 'EXPENSE')->sum('amount');
 
-            return response()->json(['balance' => $balance, 'IMCOME' => $income, 'EXPENSE' => $expense]);
+            return response()->json(['balance' => $balance, 'INCOME' => $income, 'EXPENSE' => $expense]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al obtener el balance'], 500);
         }

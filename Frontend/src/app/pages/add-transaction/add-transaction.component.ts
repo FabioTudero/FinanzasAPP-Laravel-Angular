@@ -57,9 +57,12 @@ export class AddTransactionComponent {
           user_id: this.userId
         };
 
+        console.log('Transaction data:', transactionData);
+
         // Ahora sí, enviar la transacción con el user_id correcto
         this.transactionService.addTransaction(transactionData).subscribe({
           next: (response) => {
+
           },
           error: (err) => {
             console.error('Error adding transaction:', err);

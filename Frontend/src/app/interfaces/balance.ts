@@ -1,5 +1,5 @@
 export interface Balance {
   balance: number;
-  INCOME: string;
+  INCOME: number;
   EXPENSE: string;
 }

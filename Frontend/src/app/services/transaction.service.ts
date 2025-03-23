@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { Category } from '../interfaces/category';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Balance } from '../interfaces/balance';
 
 @Injectable({
@@ -34,12 +34,23 @@ export class TransactionService {
     if (!token) {
       throw new Error('No se encontró el token de autenticación');
     }
-    return this.http.post(`${this.apiUrl}/add-transaction`, { token, transaction }).pipe(
+  
+    const headers = new HttpHeaders({ 
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+   
+    return this.http.post(`${this.apiUrl}/add-transaction`, transaction, { headers }).pipe(
       tap(() => {
         this.route.navigate(['/dashboard']);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error del servidor:', error);
+        return throwError(() => new Error(error.message));
       })
     );
-  }
+  }  
 
   getBalance(): Observable<Balance> {
     const token = localStorage.getItem('auth_token');

@@ -52,17 +52,17 @@ export class TransactionService {
     );
   }  
 
-  getBalance(): Observable<Balance> {
+  getBalance(month: number, year: number): Observable<Balance> {
     const token = localStorage.getItem('auth_token');
     if (!token) {
       throw new Error('No se encontró el token de autenticación');
-    }
+    }    
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<Balance>(`${this.apiUrl}/get-balance`, { headers });
+    return this.http.get<Balance>(`${this.apiUrl}/get-balance`, { headers, params: { month, year } });
   }
 
   getTransactions(): Observable<any> {

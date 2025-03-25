@@ -21,6 +21,7 @@ interface Month {
 export class DashboardComponent {
   user?: User;
   currentMonth: string;
+  currentYear: number = new Date().getFullYear();
   balance: Balance | undefined;
   transactions: Transaction[] | undefined;
   selectedMonth: Month | undefined;
@@ -38,6 +39,7 @@ export class DashboardComponent {
     { id: 11, name: 'Noviembre' },
     { id: 12, name: 'Diciembre' }
   ];
+  currentIdMonth: number = new Date().getMonth() + 1;
 
   constructor(private authService: AuthService, private transactionService: TransactionService) {
     const date = new Date();
@@ -46,8 +48,6 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
-    console.log(this.months[new Date().getMonth()]);
-    
     this.authService.getUser().subscribe({
       next: (userData) => {
         this.user = userData;
@@ -57,7 +57,7 @@ export class DashboardComponent {
       }
     });
     
-    this.transactionService.getBalance().subscribe({
+    this.transactionService.getBalance(this.currentIdMonth, this.currentYear).subscribe({
       next: (balance) => {
         this.balance = balance;
       },
@@ -69,8 +69,6 @@ export class DashboardComponent {
     this.transactionService.getTransactions().subscribe({
       next: (transactions) => {
         this.transactions = transactions
-        console.log('Transactions:', transactions);
-        
       },
       error: (err) => {
         console.error('Error fetching transactions:', err);

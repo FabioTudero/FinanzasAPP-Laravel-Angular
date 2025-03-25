@@ -42,12 +42,13 @@ class TransactionController extends Controller
 
     public function get_balance(Request $request)
     {
+        Log::info($request->all());
         try {
             // Obtener el usuario autenticado
             $user = $request->user();
 
             // Obtener las transacciones del usuario
-            $transactions = Transaction::where('user_id', $user->id)->get();
+            $transactions = Transaction::where('user_id', $user->id)->where('month', $request->input('month'))->where('year', $request->input('year'))->get();
 
             // Calcular el balance
             $balance = 0;
@@ -59,8 +60,8 @@ class TransactionController extends Controller
                 }
             }
 
-            $income = Transaction::where('user_id', $user->id)->where('type', 'INCOME')->sum('amount');
-            $expense = Transaction::where('user_id', $user->id)->where('type', 'EXPENSE')->sum('amount');
+            $income = Transaction::where('user_id', $user->id)->where('type', 'INCOME')->where('month', $request->input('month'))->where('year', $request->input('year'))->sum('amount');
+            $expense = Transaction::where('user_id', $user->id)->where('type', 'EXPENSE')->where('month', $request->input('month'))->where('year', $request->input('year'))->sum('amount');
 
             return response()->json(['balance' => $balance, 'INCOME' => $income, 'EXPENSE' => $expense]);
         } catch (\Exception $e) {
@@ -75,7 +76,7 @@ class TransactionController extends Controller
             $user = $request->user();
 
             // Obtener las transacciones del usuario
-            $transactions = Transaction::where('user_id', $user->id)->get();
+            $transactions = Transaction::where('user_id', $user->id->where('month', $request->input('month'))->where('year', $request->input('year')))->get();
 
             return response()->json($transactions);
         } catch (\Exception $e) {

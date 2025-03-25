@@ -76,7 +76,7 @@ class TransactionController extends Controller
             $user = $request->user();
 
             // Obtener las transacciones del usuario
-            $transactions = Transaction::where('user_id', $user->id->where('month', $request->input('month'))->where('year', $request->input('year')))->get();
+            $transactions = Transaction::where('user_id', $user->id)->where('month', $request->input('month'))->where('year', $request->input('year'))->get();
 
             return response()->json($transactions);
         } catch (\Exception $e) {

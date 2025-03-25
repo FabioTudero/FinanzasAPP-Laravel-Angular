@@ -66,7 +66,7 @@ export class DashboardComponent {
       }
     });
 
-    this.transactionService.getTransactions().subscribe({
+    this.transactionService.getTransactions(this.currentIdMonth, this.currentYear).subscribe({
       next: (transactions) => {
         this.transactions = transactions
       },

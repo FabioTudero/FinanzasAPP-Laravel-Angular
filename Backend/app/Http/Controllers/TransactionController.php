@@ -42,7 +42,6 @@ class TransactionController extends Controller
 
     public function get_balance(Request $request)
     {
-        Log::info($request->all());
         try {
             // Obtener el usuario autenticado
             $user = $request->user();

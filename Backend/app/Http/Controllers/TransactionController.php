@@ -71,15 +71,34 @@ class TransactionController extends Controller
     public function get_transactions(Request $request)
     {
         try {
-            // Obtener el usuario autenticado
             $user = $request->user();
-
-            // Obtener las transacciones del usuario
-            $transactions = Transaction::where('user_id', $user->id)->where('month', $request->input('month'))->where('year', $request->input('year'))->get();
-
-            return response()->json($transactions);
+    
+            // Obtener las transacciones con la relación de categoría
+                    $transactions = Transaction::with('categoryTransaction')
+                        ->where('user_id', $user->id)
+                ->where('month', $request->input('month'))
+                ->where('year', $request->input('year'))
+                ->get();
+    
+            // Formatear la respuesta
+            $transactions_array = [];
+            foreach ($transactions as $transaction) {
+                $category = CategoryTransaction::find($transaction->category_transaction_id);
+                $transactions_array[] = [
+                    'id' => $transaction->id,
+                    'category' => $category->name,
+                    'type' => $transaction->type,
+                    'description' => $transaction->description,
+                    'amount' => $transaction->amount,
+                    'day' => $transaction->day,
+                    'month' => $transaction->month,
+                    'year' => $transaction->year
+                ];
+            }
+    
+            return response()->json($transactions_array);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al obtener las transacciones'], 500);
-        }
+        }    
     }
 }

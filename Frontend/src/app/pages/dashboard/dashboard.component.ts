@@ -69,6 +69,7 @@ export class DashboardComponent {
     this.transactionService.getTransactions(this.currentIdMonth, this.currentYear).subscribe({
       next: (transactions) => {
         this.transactions = transactions
+        console.log('Transactions:', transactions);
       },
       error: (err) => {
         console.error('Error fetching transactions:', err);

@@ -102,9 +102,9 @@
                          'text-emerald-600' : 
                          'text-red-600'" 
                  class="text-sm font-medium">
-                <!-- {{transaction.type === 'IMCOME' ? '+' : '-'}}{{formatCurrency(transaction.amount)}} -->
+                {{transaction.type === 'INCOME' ? '+' : '-'}}{{transaction.amount}}
               </p>
-              <!-- <p class="text-sm text-gray-500">{{formatDate(transaction.date)}}</p> -->
+              <p class="text-sm text-gray-500">{{transaction.day}}/{{transaction.month}}/{{transaction.year}}</p>
             </div>
           </div>
         </div>

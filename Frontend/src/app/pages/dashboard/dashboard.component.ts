@@ -16,31 +16,26 @@ import { Transaction } from '../../interfaces/transaction';
 })
 export class DashboardComponent {
   user?: User;
-  currentMonth: string;
+  currentMonth: string | undefined;
   currentYear: number = new Date().getFullYear();
   balance: Balance | undefined;
   transactions: Transaction[] | undefined;
   selectedMonth: Month | undefined;
-  months: Month[] = [
-    { id: 1, name: 'Enero' },
-    { id: 2, name: 'Febrero' },
-    { id: 3, name: 'Marzo' },
-    { id: 4, name: 'Abril' },
-    { id: 5, name: 'Mayo' },
-    { id: 6, name: 'Junio' },
-    { id: 7, name: 'Julio' },
-    { id: 8, name: 'Agosto' },
-    { id: 9, name: 'Septiembre' },
-    { id: 10, name: 'Octubre' },
-    { id: 11, name: 'Noviembre' },
-    { id: 12, name: 'Diciembre' }
-  ];
+  months: Month[] | undefined;
   currentIdMonth: number = new Date().getMonth() + 1;
 
   constructor(private authService: AuthService, private transactionService: TransactionService) {
     const date = new Date();
-    this.currentMonth = this.months[date.getMonth()].name;
-    this.selectedMonth = this.months[date.getMonth()];
+    this.transactionService.getMonths().subscribe({
+      next: (months: Month[]) => {
+        this.months = months;
+        this.currentMonth = this.months[date.getMonth()].name;
+        this.selectedMonth = this.months[date.getMonth()];
+      },
+      error: (err) => {
+        console.error('Error fetching months:', err);
+      }
+    });
   }
 
   ngOnInit() {

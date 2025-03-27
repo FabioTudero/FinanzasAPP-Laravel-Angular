@@ -13,8 +13,13 @@ import { Balance } from '../interfaces/balance';
 export class TransactionService {
   private apiUrl = environment.apiUrl;
   user_id: number | undefined;
+  mouth_json: any = 'assets/mouth.json';
 
   constructor(private http: HttpClient, private route: Router) { }
+
+  getMonths(): Observable<any> {
+    return this.http.get(this.mouth_json);
+  }
 
   getCategories(): Observable<Category[]> {
     const token = localStorage.getItem('auth_token');

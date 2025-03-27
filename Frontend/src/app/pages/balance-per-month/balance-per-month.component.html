@@ -1,1 +1,40 @@
-<p>balance-per-month works!</p>
+<div class="space-y-6">
+    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+      <h1 class="text-2xl font-bold text-gray-800">
+        Balance por mes
+      </h1>
+    </div>
+    <div class="flex items-center justify-center space-x-8 bg-card px-8 py-4 rounded-lg shadow-sm">
+        <button aria-label="Previous Year" (click)="subtractYear()" class="w-12 h-12 flex items-center justify-center rounded-full bg-secondary hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-secondary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        
+        <div class="flex flex-col items-center justify-center">
+            <span class="text-4xl md:text-5xl font-bold text-foreground select-none" aria-live="polite">{{ currentYear }}</span>
+        </div>
+
+        <button aria-label="Next Year" (click)="sumYear()" class="w-12 h-12 flex items-center justify-center rounded-full bg-secondary hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-secondary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+    <div class="bg-fuchsia-50 rounded-xl p-6 border border-fuchsia-100 flex items-center justify-between">
+        @for (month of months; track $index) {
+            <button (click)="getMonth(month.id)" class="block bg-sky-100 text-sky-600 text-center py-3 rounded-lg shadow-sm hover:bg-sky-200 w-32  transition-colors" [class.bg-sky-200]="month.id === currentMonth">
+                {{month.name}}
+            </button>
+        }
+    </div>
+
+    <app-balance-card [balance]="balance"></app-balance-card>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+        <div class="p-6 border-b border-gray-100">
+          <h2 class="text-xl font-semibold text-gray-800">Operaciones del mes</h2>
+        </div>
+        <app-balance-list [transactions]="transactions"></app-balance-list>
+    </div>
+</div>  

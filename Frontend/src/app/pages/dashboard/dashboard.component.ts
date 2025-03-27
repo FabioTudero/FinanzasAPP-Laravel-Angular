@@ -3,7 +3,7 @@ import { AuthService, User } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { TransactionService } from '../../services/transaction.service';
 import { Balance } from '../../interfaces/balance';
-import { Month } from '../../interfaces/mouth';
+import { Month } from '../../interfaces/month';
 import { CommonModule } from '@angular/common';
 import { Transaction } from '../../interfaces/transaction';
 import { BalanceCardComponent } from "../../components/balance-card/balance-card.component";

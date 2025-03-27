@@ -53,4 +53,16 @@ export class ModalAddTransactionComponent {
     });
   }
 
+  onSubmit() {
+    this.transactionService.addTransaction(this.addTransactionForm.value).subscribe({
+      next: (response) => {
+        console.log('Transaction added:', response);
+        this.closeModal();
+      },
+      error: (err) => {
+        console.error('Error adding transaction:', err);
+      }
+    });
+  }
+
 }

@@ -7,11 +7,12 @@ import { Month } from '../../interfaces/mouth';
 import { CommonModule } from '@angular/common';
 import { Transaction } from '../../interfaces/transaction';
 import { BalanceCardComponent } from "../../components/balance-card/balance-card.component";
+import { BalanceListComponent } from "../../components/balance-list/balance-list.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink, CommonModule, BalanceCardComponent],
+  imports: [RouterLink, CommonModule, BalanceCardComponent, BalanceListComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

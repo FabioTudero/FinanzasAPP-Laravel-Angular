@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 
 @Component({
@@ -12,6 +12,12 @@ export class ModalAddTransactionComponent {
 
   @Input() show = false;
   @Output() close = new EventEmitter<void>();
+
+  // Detectar tecla "Esc" y cerrar el modal
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscKeydown(event: KeyboardEvent) {
+    this.closeModal();
+  }
 
   closeModal() {
     this.close.emit();

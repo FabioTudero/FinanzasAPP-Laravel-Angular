@@ -3,13 +3,9 @@ import { AuthService, User } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { TransactionService } from '../../services/transaction.service';
 import { Balance } from '../../interfaces/balance';
+import { Month } from '../../interfaces/mouth';
 import { CommonModule } from '@angular/common';
 import { Transaction } from '../../interfaces/transaction';
-
-interface Month {
-  id: number;
-  name: string;
-}
 
 @Component({
   selector: 'app-dashboard',

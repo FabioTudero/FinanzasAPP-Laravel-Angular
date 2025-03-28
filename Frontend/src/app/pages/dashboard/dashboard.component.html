@@ -16,11 +16,15 @@
     Agregar Transacción
   </a>
 
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+    <app-grafic></app-grafic>
+  </div>
   <!-- Recent Transactions -->
   <div class="bg-white rounded-xl shadow-sm border border-gray-100">
     <div class="p-6 border-b border-gray-100">
       <h2 class="text-xl font-semibold text-gray-800">Operaciones Recientes</h2>
     </div>
+
 
     <app-balance-list [transactions]="transactions"></app-balance-list>
     

@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { Transaction } from '../../interfaces/transaction';
 import { BalanceCardComponent } from "../../components/balance-card/balance-card.component";
 import { BalanceListComponent } from "../../components/balance-list/balance-list.component";
+import { GraficComponent } from "../../components/grafic/grafic.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink, CommonModule, BalanceCardComponent, BalanceListComponent],
+  imports: [RouterLink, CommonModule, BalanceCardComponent, BalanceListComponent, GraficComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

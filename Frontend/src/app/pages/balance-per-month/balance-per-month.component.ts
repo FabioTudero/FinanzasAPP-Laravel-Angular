@@ -5,11 +5,12 @@ import { BalanceCardComponent } from "../../components/balance-card/balance-card
 import { BalanceListComponent } from "../../components/balance-list/balance-list.component";
 import { Transaction } from '../../interfaces/transaction';
 import { ModalAddTransactionComponent } from '../../components/modal-add-transaction/modal-add-transaction.component';
+import { GraficComponent } from "../../components/grafic/grafic.component";
 
 @Component({
   selector: 'app-balance-per-month',
   standalone: true,
-  imports: [BalanceCardComponent, BalanceListComponent, ModalAddTransactionComponent],
+  imports: [BalanceCardComponent, BalanceListComponent, ModalAddTransactionComponent, GraficComponent],
   templateUrl: './balance-per-month.component.html',
   styleUrl: './balance-per-month.component.css'
 })

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Models\CategoryTransaction;
 use App\Models\Transaction;
+use App\Models\LimitCategory;
 
 class TransactionController extends Controller
 {
@@ -100,5 +101,21 @@ class TransactionController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al obtener las transacciones'], 500);
         }    
+    }
+
+    public function add_limit(Request $request)
+    {
+        Log::info($request->all());
+        try {
+            $user_id = $request->user()->id;
+            $limit = new LimitCategory();
+            $limit->user_id = $user_id;
+            $limit->category_transaction_id = $request->input('category_transaction_id');
+            $limit->limit = $request->input('limit');
+            $limit->save();
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Error al agregar el límite'], 500);
+        }
     }
 }

@@ -21,5 +21,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/add-transaction', [TransactionController::class, 'add_transaction']);
     Route::get('/get-balance', [TransactionController::class, 'get_balance']);
     Route::get('/get-transactions', [TransactionController::class, 'get_transactions']);
+    Route::post('/add-limit', [TransactionController::class, 'add_limit']);
 });
 /* TRANSACTION */

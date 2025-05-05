@@ -38,7 +38,6 @@ export class LimitPerCategoryComponent {
     this.transactionService.getLimits().subscribe({
       next: (limits) => {
         this.limits = limits; 
-        console.log('Limits:', this.limits);
       },
       error: (err) => {
         console.error('Error fetching limits:', err);

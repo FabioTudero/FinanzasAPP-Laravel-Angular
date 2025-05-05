@@ -103,9 +103,31 @@ class TransactionController extends Controller
         }    
     }
 
+    public function get_limits(Request $request)
+    {
+        try {
+            $user = $request->user();
+
+            $limits = LimitCategory::with('categoryTransaction')
+                ->where('user_id', $user->id)
+                ->get();
+            $limits_array = [];
+            foreach ($limits as $limit) {
+                $category = CategoryTransaction::find($limit->category_transaction_id);
+                $limits_array[] = [
+                    'id' => $limit->id,
+                    'category' => $category->name,
+                    'limit' => $limit->limit
+                ];
+            }
+            return response()->json($limits_array);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al obtener los límites: ' . $e], 500);
+        }
+    }
+
     public function add_limit(Request $request)
     {
-        Log::info($request->all());
         try {
             $user_id = $request->user()->id;
             $limit = new LimitCategory();

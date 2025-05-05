@@ -16,6 +16,7 @@ export class LimitPerCategoryComponent {
 
   addLimitFormm: FormGroup;
   categories: Category[] | undefined;
+  limits: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -33,6 +34,16 @@ export class LimitPerCategoryComponent {
       category_transaction_id: [''],
       limit: [''],
     });
+
+    this.transactionService.getLimits().subscribe({
+      next: (limits) => {
+        this.limits = limits; 
+        console.log('Limits:', this.limits);
+      },
+      error: (err) => {
+        console.error('Error fetching limits:', err);
+      }
+    }); 
   }
 
   onSubmit() {

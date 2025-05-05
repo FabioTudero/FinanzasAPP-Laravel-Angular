@@ -30,4 +30,29 @@
 
     </div>
 
+    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 mt-6">
+
+        <h2 class="text-xl font-bold text-gray-800">Límites por Categoría</h2>
+
+        <table class="min-w-full bg-white border border-gray-200 mt-4">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="py-2 px-4 border-b">Categoría</th>
+                    <th class="py-2 px-4 border-b">Límite</th>
+                    <th class="py-2 px-4 border-b">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (limit of limits; track $index) {
+                <tr class="hover:bg-gray-50 text-center">
+                    <td class="py-2 px-4 border-b">{{ limit.category }}</td>
+                    <td class="py-2 px-4 border-b">{{ limit.limit | currency }}</td>
+                    <td class="py-2 px-4 border-b">
+                        <button class="text-red-500 hover:text-red-700">Eliminar</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

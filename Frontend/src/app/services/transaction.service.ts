@@ -83,6 +83,25 @@ export class TransactionService {
     return this.http.get(`${this.apiUrl}/get-transactions`, { headers, params: { month, year } });
   }
 
+  getLimits(): Observable<any> {
+    const token = localStorage.getItem('auth_token');
+
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación');
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get(`${this.apiUrl}/get-limits`, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error del servidor:', error);
+        return throwError(() => new Error(error.message));
+      })
+    );
+  }
+
   addLimit(limit: any): Observable<any> {
     const token = localStorage.getItem('auth_token');
     if (!token) {

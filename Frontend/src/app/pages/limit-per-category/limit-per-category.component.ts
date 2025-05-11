@@ -48,7 +48,15 @@ export class LimitPerCategoryComponent {
   onSubmit() {
     this.transactionService.addLimit(this.addLimitFormm.value).subscribe({
       next: (response) => {
-        console.log('Limit added:', response);
+        this.transactionService.getLimits().subscribe({
+          next: (limits) => {
+            this.limits = limits;
+          },
+          error: (err) => {
+            console.error('Error fetching limits:', err);
+          }
+        }); 
+        this.addLimitFormm.reset(); // Reset the form after submission
       },
       error: (err) => {
         console.error('Error adding limit:', err);

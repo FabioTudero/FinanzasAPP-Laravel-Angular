@@ -128,6 +128,13 @@ class TransactionController extends Controller
 
     public function add_limit(Request $request)
     {
+        $user = $request->user();
+        $check = LimitCategory::where('user_id', $user->id)->where('category_transaction_id', $request->input('category_transaction_id'))->first();
+
+        if ($check) {
+            return response()->json(['error' => 'Ya existe un límite para esta categoría'], 400);
+        }
+
         try {
             $user_id = $request->user()->id;
             $limit = new LimitCategory();

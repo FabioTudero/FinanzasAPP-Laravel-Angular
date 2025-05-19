@@ -140,4 +140,23 @@ class TransactionController extends Controller
             return response()->json(['error' => 'Error al agregar el límite'], 500);
         }
     }
+
+    public function delete_limit(Request $request)
+    {
+        Log::info('delete_limit: ' . json_encode($request->all()));
+        Log::info('user: ' . json_encode($request->user()));
+        try {
+            $user_id = $request->user()->id;
+            $limit = LimitCategory::where('user_id', $user_id)->where('id', $request->input('limit_id'))->first();
+            if ($limit) {
+                $limit->delete();
+                return response()->json(['message' => 'Límite eliminado correctamente']);
+            } else {
+                return response()->json(['error' => 'Límite no encontrado'], 404);
+            }
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Error al eliminar el límite'], 500);
+        }
+    }
 }

@@ -124,4 +124,26 @@ export class TransactionService {
       })
     );
   }
+
+  deleteLimit(limitId: number): Observable<any> {
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación');
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
+    return this.http.post(`${this.apiUrl}/delete-limit`, { limit_id: limitId }, { headers }).pipe(
+      tap(() => {
+        this.route.navigate(['/limit-per-category']);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error del servidor:', error);
+        return throwError(() => new Error(error.message));
+      })
+    );
+  }
 }

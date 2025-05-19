@@ -47,7 +47,7 @@
                 <tr class="hover:bg-gray-50 text-center">
                     <td class="py-2 px-4 border-b">{{ limit.category }}</td>
                     <td class="py-2 px-4 border-b">{{ limit.limit | currency }}</td>
-                    <td class="py-2 px-4 border-b">
+                    <td class="py-2 px-4 border-b" (click)="deleteLimit(limit.id)">
                         <button class="text-red-500 hover:text-red-700">Eliminar</button>
                     </td>
                 </tr>

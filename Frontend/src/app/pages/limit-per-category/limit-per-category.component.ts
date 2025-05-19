@@ -64,4 +64,14 @@ export class LimitPerCategoryComponent {
     });
   }
 
+  deleteLimit(limitId: number) {
+    this.transactionService.deleteLimit(limitId).subscribe({
+      next: () => {
+        this.limits = this.limits.filter(limit => limit.id !== limitId);
+      },
+      error: (err) => {
+        console.error('Error deleting limit:', err);
+      }
+    });
+  }
 }
